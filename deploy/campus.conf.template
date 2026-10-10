@@ -1,0 +1,17 @@
+# CampusAutoLogin router config - /etc/nettask/campus.conf  (chmod 600)
+# 所有值按你的校园网环境填写；示例/占位符不要原样使用。
+
+USERNAME="<your-student-id>"   # 学号 / Portal 用户名
+SUFFIX="@telecom"              # 运营商后缀；不填则留空 ""（用户名已含 @ 时脚本自动不再加后缀）
+PREFIX=",0,"                   # Dr.COM 账号前缀；部分路由器（NAT）部署需置空 ""
+WAN_IF="phy0-sta0"             # 校园网上联接口名（无线 STA 或 eth/br 口均可）
+WLAN_SSID="campus"             # 校园 WiFi SSID（用于 STA 失联自检；有线场景留空）
+PORTAL_HOST="1.1.1.1"          # 门户 VIP（被拦截时 HTTP 被劫持到它）
+PORT="801"                     # eportal 端口
+WLANACIP=""                    # AC 地址备用值（a70 页有实时值时优先；留空则用页面/默认）
+LOGIN_METHOD="1"               # Dr.COM loginMethod 参数
+
+# 登录表单（application/x-www-form-urlencoded，部署时预编码）：
+#   账号规则 <PREFIX><用户名><后缀>：逗号 %2C、@ %40。
+#   密码要求 ASCII 字母数字（否则按同样规则转义后再填入）：
+# FORM_BODY='DDDDD=%2C0%2C<student-id>%40telecom&upass=<password>&R1=0&R2=0&R3=0&R6=0&para=00&0MKKey=123456&buttonClicked=&redirect_url=&err_flag=&username=&password=<password>&user=&cmd=&Login='
